@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>inputform</title>
+		<style>
+		.form
+		{
+			display:flex;
+			flex-direction:column;
+			margin:50px 500px 50px 500px;
+			padding:10px;
+			font-size:25px;	
+		}
+		input
+		{
+			margin:10px;
+			padding:10px;
+		}
+		.button
+		{
+			padding:10px;	
+			margin:10px 100px;
+			border-radius:20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="form">
+			<input class="firstName" type ="text" placeholder="first Name" />
+			<input class="lastName" type ="text" placeholder ="Last Name"/>
+			<input class="delay" type="text" placeholder ="delay Time" />
+			<button class="button">button</button>
+		</div>
+		<div class="display"></div>
+	</body>
+	<script>
+		
+		let button = document.querySelector(".button");
+		button.onclick = function(){
+			let firstName = document.querySelector(".firstName").value;
+			let lastName = document.querySelector(".lastName").value;
+			let divTag = document.createElement("div");
+			divTag.append(firstName,lastName);
+			divTag.style.padding="10px";
+			
+			let display = document.querySelector(".display");
+			
+			display.append(divTag);
+			display.style.margin="10px 500px 10px 650px";
+		}
+	</script>
+</html>
