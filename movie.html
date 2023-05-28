@@ -1,0 +1,127 @@
+<html>
+<head>
+	<title>Movie</title>
+	<style>
+		
+		
+		
+		
+		.poster{
+			margin-left:0px;
+			border:1px solid black;
+			border-radius:4px;
+				
+		}
+		.allMovie{
+			display:flex;
+			flex-wrap:wrap;
+			margin-left:30px;
+		}
+		input
+		{
+			margin-top:30px;
+			margin-left:50px;
+			padding:10px;
+			font-size:20px;	
+		}
+		.button
+		{
+			padding:10px;
+			font-size:20px;
+		}
+		
+		.Movie
+		{
+			width:300px;
+			border-radius:10px;
+			margin:20px 20px 20px 20px;	
+		}
+	</style>
+</head>
+<body>
+	
+	<div><input type="text" placeholder="Enter your name" class="search"/>
+	<button class="button" onClick="search()">click</button></div>
+	<div class="allMovie"></div>
+	<div class="nomovie"></div>
+</body>
+<script>
+	
+	let allMovie=document.querySelector(".allMovie");
+	
+	let data;
+	async function fetchData(url){
+		const response=await fetch(url);
+		const jsonData=await response.json();
+		return jsonData;
+	}
+	async function search(){
+		let result=document.querySelector(".search").value;
+		let response=await fetchData(` http://www.omdbapi.com/?apikey=6663c708&s=${result}`);
+		
+		console.log(response);
+		
+		data=response["Search"];
+		 
+		 
+		if(data!==0)
+		{
+			
+			for(let i=0; i<data.length;i++)
+			{
+				
+				
+				let divTag=document.createElement("div");
+				
+				let img=document.createElement("img");
+				img.setAttribute("src",data[i].Poster);
+				
+				let title=document.createElement("p");
+				title.innerHTML=data[i].Title;
+				title.style.fontSize="30px";
+				title.style.color="green";
+				title.style.textAlign="center";
+				
+				let year=document.createElement("p");
+				year.innerHTML= "("+data[i].Year+")";
+				year.style.fontSize="30px";
+				year.style.color="green";
+				year.style.textAlign="center";
+				
+				
+				let id=document.createElement("p");
+				id.innerHTML=data[i].imdbID;
+				id.style.fontSize="30px";
+				id.style.color="green";
+				id.style.textAlign="center";
+				
+				divTag.append(img,title,year, id);
+				divTag.style.border="1px solid white";
+				allMovie.append(divTag);
+				
+				divTag.setAttribute("onClick",`showMovie(${i})`);
+				divTag.setAttribute("class","movie");
+				img.setAttribute("class","poster");
+				title.setAttribute("class","title");
+				year.setAttribute("class","year");
+				id.setAttribute("class","id");
+		
+				
+			}
+		}
+		else
+		{
+			let nomovie=document.querySelector(".nomovie");
+			let div=document.createElement("div");
+			let text=document.createElement("p");
+			text.innerHTML="There is no movie";
+			div.append(text);
+			nomovie.append(div);
+			
+			
+		}
+	}
+	
+	
+</script>
+</html>
